@@ -15,16 +15,6 @@ export default function People() {
 
     return (
         <div className="h-screen w-screen flex overflow-hidden bg-gray-100">
-
-            {/* Sidebar */}
-
-            <Sidebar
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                active={active}
-                setActive={setActive}
-            />
-
             {/* Right Section */}
             <div className="flex-1 flex flex-col h-full">
 

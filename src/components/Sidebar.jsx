@@ -9,24 +9,29 @@ import PROJECT from "../assets/project.png";
 import HIRING from "../assets/hiring.png";
 import REPORT from "../assets/report.png";
 import SETTINGS from "../assets/settings.png";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
-export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
+export default function Sidebar({ isOpen, setIsOpen, }) {
   const [openMenu, setOpenMenu] = useState(null);
   const [openChildMenu, setOpenChildMenu] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
 
   const menus = [
-    { id: 1, title: "Home", icon: HOME, children: [] },
+    { id: 1, title: "Home", icon: HOME, route: "/home", children: [] },
     {
       id: 2,
       title: "My Info",
       icon: INFO,
+      route: "/myinfo",
       children: [
         {
           childId: 201,
           childTitle: "Employees Info",
           grandchildren: [
-            { grandchildId: 2011, grandchildTitle: "Personal Details" },
+            { grandchildId: 2011, grandchildTitle: "Personal Details", route: "/myinfo/personaldatails" },
           ]
         }
       ]
@@ -35,30 +40,28 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
       id: 3,
       title: "People",
       icon: PEOPLE,
+      route: "/people",
       children: []
     },
     {
       id: 4,
       title: "Team Management",
       icon: HOME,
+      route: "/teammanagement",
       children: [
         {
           childId: 401,
           childTitle: "Timesheet",
           grandchildren: [
-            { grandchildId: 4011, grandchildTitle: "Add Employee" },
-            { grandchildId: 4012, grandchildTitle: "Employee List" }
+            { grandchildId: 4011, grandchildTitle: "Add Employee", route: "/teammanagement/addemployee", },
+            { grandchildId: 4012, grandchildTitle: "Employee List", route: "/teammanagement/employeelist", }
           ]
         },
         {
           childId: 402,
           childTitle: "Reimbursement",
           grandchildren: [
-            {
-              grandchildId: 4021,
-              grandchildTitle: "Reimbursement Employee"
-            },
-            { grandchildId: 4022, grandchildTitle: "Reimbursement List" }
+            { grandchildId: 4021, grandchildTitle: "Reimbursement List", route: "/reimbursement/reimbursementlist" }
           ]
         }
       ]
@@ -67,29 +70,42 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
       id: 5,
       title: "Project Setup",
       icon: PROJECT,
+      route: "/projectsetup",
       children: [
         {
           childId: 501,
           childTitle: "Projects",
+          route: "/projectsetup/projects",
           grandchildren: []
         }
       ]
     },
-    { id: 6, title: "Hiring", icon: HIRING, children: [] },
-    { id: 7, title: "Report", icon: REPORT, children: [] }
+    { id: 6, title: "Hiring", icon: HIRING, route: "/hiring", children: [] },
+    { id: 7, title: "Report", icon: REPORT, route: "/report", children: [] }
   ];
 
-  const handleClick = (item, parent) => {
-    setActive(parent ? `${parent}/${item}` : item);
+  useEffect(() => {
+    const path = location.pathname;
+
+    menus.forEach((menu) => {
+      if (path.startsWith(menu.route)) {
+        setOpenMenu(menu.title);
+        menu.children?.forEach((child) => {
+          child.grandchildren?.forEach((g) => {
+            if (path === g.route) {
+              setOpenChildMenu(child.childTitle);
+            }
+          });
+        });
+      }
+    });
+  }, [location.pathname]);
+
+  const handleNavigate = (route) => {
+    navigate(route);
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    const parts = active.split("/");
-    setOpenMenu(parts[0] || null);
-    setOpenChildMenu(parts[1] || null);
-  }, [active]);
-  console.log(active, 'active')
   return (
     <>
       {/* Mobile Overlay */}
@@ -101,13 +117,18 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
           <div className="flex items-center justify-between mb-10"><img src={LOGO} alt="Logo" /><img src={MULTICHEVRON} className="w-4 h-4 cursor-pointer" /></div>
           <nav className="space-y-2">
             {menus.map((menu) => {
-              const isParentActive = active === menu.title;
-              const isParentIndicator = active === menu.title || active.startsWith(menu.title + "/");
+              const isParentActive = location.pathname === menu.route;
+              const isParentIndicator = location.pathname === menu.route || location.pathname.startsWith(menu.route)
+
               return (
                 <div key={menu.id}>
                   {/* ================= PARENT ================= */}
                   <div onClick={() => {
-                    menu.children?.length > 0 ? setOpenMenu(openMenu === menu.title ? null : menu.title) : handleClick(menu.title);
+                    console.log(location.pathname, '1')
+                    console.log(menu.route, '2')
+                    console.log(isParentActive, 'isParentActive')
+                    console.log(isParentIndicator, 'isParentIndicator')
+                    menu.children?.length ? setOpenMenu(openMenu === menu.title ? null : menu.title) : handleNavigate(menu.route)
                   }}
                     className={`relative p-2 pl-4 rounded-lg cursor-pointer
                   ${isParentActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}
@@ -127,12 +148,14 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
                     openMenu === menu.title && (
                       <div className="ml-4 mt-1 space-y-1">
                         {menu.children.map((child) => {
-                          const childPath = `${menu.title}/${child.childTitle}`;
-                          const isChildActive = active === childPath;
+                          const isChildActive = location.pathname === child.route;
                           return (
                             <div key={child.childId}>
                               {/* CHILD */}
-                              <div onClick={() => { child.grandchildren?.length > 0 ? setOpenChildMenu(openChildMenu === child.childTitle ? null : child.childTitle) : handleClick(child.childTitle, menu.title); }}
+                              <div onClick={() => {
+                                console.log(isChildActive, 'isChildActive')
+                                child.grandchildren?.length ? setOpenChildMenu(openChildMenu === child.childTitle ? null : child.childTitle) : handleNavigate(child.route)
+                              }}
                                 className={`relative p-2 pl-4 rounded-lg cursor-pointer text-sm
                               ${isChildActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}
                               >
@@ -148,10 +171,11 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
                                 openChildMenu === child.childTitle && (
                                   <div className="ml-4 mt-1 space-y-1">
                                     {child.grandchildren.map((g) => {
-                                      const grandChildPath = `${menu.title}/${child.childTitle}/${g.grandchildTitle}`;
-                                      const isGrandChildActive = active === grandChildPath;
+                                      const isGrandChildActive = location.pathname === g.route;
                                       return (
-                                        <div key={g.grandchildId} onClick={() => handleClick(`${child.childTitle}/${g.grandchildTitle}`, menu.title)}
+                                        <div key={g.grandchildId} onClick={() => {
+                                          handleNavigate(g.route)
+                                        }}
                                           className={`p-2 pl-4 rounded-lg cursor-pointer text-sm
                                           ${isGrandChildActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}>
                                           {g.grandchildTitle}
