@@ -80,7 +80,7 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
     setOpenMenu(parts[0] || null);
     setOpenChildMenu(parts[1] || null);
   }, [active]);
-
+  console.log(active, 'active')
   return (
     <>
       {/* Mobile Overlay */}
@@ -95,17 +95,20 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
 
         <nav className="space-y-2">
           {menus.map((menu) => {
-            const isParentActive = active === menu.title || active.startsWith(menu.title + "/");
+            const isParentActive = active === menu.title;
+            const isParentIndicator = active === menu.title || active.startsWith(menu.title + "/");
             return (
               <div key={menu.id}>
                 {/* ================= PARENT ================= */}
-                <div onClick={() => { menu.children?.length > 0 ? setOpenMenu(openMenu === menu.title ? null : menu.title) : handleClick(menu.title); }}
+                <div onClick={() => {
+                  menu.children?.length > 0 ? setOpenMenu(openMenu === menu.title ? null : menu.title) : handleClick(menu.title);
+                }}
                   className={`relative p-2 pl-4 rounded-lg cursor-pointer
                   ${isParentActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}
                 >
                   {/* Active indicator */}
                   <div className={`absolute left-[-18px] top-1/2 -translate-y-1/2 h-8 w-1.5 rounded-r-full
-                    ${isParentActive ? "bg-white opacity-100" : "opacity-0"}`} />
+                    ${isParentIndicator ? "bg-white opacity-100" : "opacity-0"}`} />
                   {menu.title}
                   {menu.children?.length > 0 && (
                     <img src={CHEVRON} className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 transition ${openMenu === menu.title ? "rotate-90" : ""}`} />
@@ -118,16 +121,13 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
                     <div className="ml-4 mt-1 space-y-1">
                       {menu.children.map((child) => {
                         const childPath = `${menu.title}/${child.childTitle}`;
-                        const isChildActive = active === childPath || active.startsWith(childPath + "/");
+                        const isChildActive = active === childPath;
                         return (
                           <div key={child.childId}>
                             {/* CHILD */}
                             <div onClick={() => { child.grandchildren?.length > 0 ? setOpenChildMenu(openChildMenu === child.childTitle ? null : child.childTitle) : handleClick(child.childTitle, menu.title); }}
                               className={`relative p-2 pl-4 rounded-lg cursor-pointer text-sm
-                              ${isChildActive
-                                  ? "bg-white text-black"
-                                  : "hover:bg-zinc-700"
-                                }`}
+                              ${isChildActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}
                             >
                               {child.childTitle}
                               {child.grandchildren?.length > 0 && (
@@ -138,8 +138,7 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
 
                             {/* ================= GRANDCHILD ================= */}
                             {child.grandchildren?.length > 0 &&
-                              openChildMenu ===
-                              child.childTitle && (
+                              openChildMenu === child.childTitle && (
                                 <div className="ml-4 mt-1 space-y-1">
                                   {child.grandchildren.map((g) => {
                                     const grandChildPath = `${menu.title}/${child.childTitle}/${g.grandchildTitle}`;
