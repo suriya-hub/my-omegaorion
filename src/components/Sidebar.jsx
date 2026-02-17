@@ -31,7 +31,7 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
           childId: 201,
           childTitle: "Employees Info",
           grandchildren: [
-            { grandchildId: 2011, grandchildTitle: "Personal Details", route: "/myinfo/personaldatails" },
+            { grandchildId: 2011, grandchildTitle: "Personal Details", route: "/myinfo/personaldetails" },
           ]
         }
       ]

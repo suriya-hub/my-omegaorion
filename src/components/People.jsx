@@ -1,68 +1,91 @@
-import React, { useState } from 'react'
-import Sidebar from './Sidebar';
+
+import SEARCH from "../assets/search.png";
+import BADGES from "../assets/badges.png";
+import DOWNLOAD from "../assets/Stroke1.png";
+import FILTER from "../assets/Stroke2.png";
+import PLUS from "../assets/Stroke3.png";
+import GIT from "../assets/Stroke4.png";
+import BOX from "../assets/element-3.png";
+import BOXTWO from "../assets/plus.png";
+
+const people = [
+    { name: "Ethan Lee", role: "IT Specialist", img: "https://i.pravatar.cc/300?img=1" },
+    { name: "Emily Baker", role: "Marketing Manager", img: "https://i.pravatar.cc/300?img=2" },
+    { name: "Michael Shaun", role: "Sales Director", img: "https://i.pravatar.cc/300?img=3" },
+    { name: "Liam Carter", role: "Product Designer", img: "https://i.pravatar.cc/300?img=4" },
+    { name: "Grace Kim", role: "Customer Lead", img: "https://i.pravatar.cc/300?img=5" },
+    { name: "Noah Williams", role: "Finance Head", img: "https://i.pravatar.cc/300?img=6" },
+    { name: "Isabella Rossi", role: "Operations Manager", img: "https://i.pravatar.cc/300?img=7" },
+    { name: "Ava Thompson", role: "HR Executive", img: "https://i.pravatar.cc/300?img=8" }
+];
 
 export default function People() {
-    const employees = [
-        { id: 1, name: "Ethan Lee", role: "IT Specialist", img: "https://i.pravatar.cc/150?img=1" },
-        { id: 2, name: "Emily Baker", role: "Marketing Manager", img: "https://i.pravatar.cc/150?img=2" },
-        { id: 3, name: "Michael Shaun", role: "Sales Director", img: "https://i.pravatar.cc/150?img=3" },
-        { id: 4, name: "Liam Carter", role: "Product Designer", img: "https://i.pravatar.cc/150?img=4" },
-        { id: 5, name: "Grace Kim", role: "Customer Lead", img: "https://i.pravatar.cc/150?img=5" },
-        { id: 6, name: "Noah Williams", role: "Finance Head", img: "https://i.pravatar.cc/150?img=6" },
-    ];
-    const [active, setActive] = useState("People");
-    const [isOpen, setIsOpen] = useState(false);
-
     return (
-        <div className="h-screen w-screen flex overflow-hidden bg-gray-100">
-            {/* Right Section */}
-            <div className="flex-1 flex flex-col h-full">
-
-                {/* Header */}
-                <header className="h-16 bg-white shadow flex items-center justify-between px-6">
-                    <h2 className="text-xl font-semibold">People</h2>
-
-                    <div className="flex items-center gap-4">
-                        <span className="text-sm bg-gray-200 px-3 py-1 rounded-full">
-                            MST
+        <div className="p-3">
+            <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
+                <div className="flex gap-3 items-center bg-transparent rounded-full px-4 py-4 w-full max-w-md shadow-sm">
+                    <img src={SEARCH} alt="search" />
+                    <input placeholder="Search by Employee Name or Number"
+                        className="bg-transparent outline-none w-full text-sm" />
+                </div>
+                <div className="flex items-center gap-2 cursor-pointer">
+                    <span className="border border-zinc-200 px-3 py-2 rounded-[15px]">
+                        <img src={DOWNLOAD} alt="download" />
+                    </span>
+                    <span className="border border-zinc-200 px-3 py-2 rounded-[15px]">
+                        <img src={FILTER} alt="filter" />
+                    </span>
+                    <span className="bg-[#3D3936] border border-zinc-200 px-3 py-2 rounded-[15px]">
+                        <img src={PLUS} alt="plus" />
+                    </span>
+                    <div className="flex items-center gap-2 border border-zinc-200 px-3 py-2 rounded-[15px]">
+                        <span className="px-3 py-2 bg-[#3D3936] rounded-[15px]">
+                            <img src={BOX} alt="download" />
                         </span>
-                        <img
-                            src="https://i.pravatar.cc/40"
-                            className="w-10 h-10 rounded-full"
-                        />
+                        <span className="px-3 py-2">
+                            <img src={BOXTWO} alt="filter" />
+                        </span>
+                        <span className="px-3 py-2">
+                            <img src={GIT} alt="git" />
+                        </span>
                     </div>
-                </header>
-
-                {/* Scrollable Content */}
-                <div className="flex-1 overflow-auto p-6">
-
-                    {/* Search */}
-                    <div className="mb-6">
-                        <input
-                            placeholder="Search by Employee Name or Number"
-                            className="w-full max-w-md border rounded-lg p-2"
-                        />
-                    </div>
-
-                    {/* Grid */}
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {employees.map((emp) => (
-                            <div
-                                key={emp.id}
-                                className="bg-white rounded-2xl p-4 shadow hover:shadow-lg transition text-center"
-                            >
-                                <img
-                                    src={emp.img}
-                                    className="w-24 h-24 mx-auto rounded-full mb-3"
-                                />
-                                <h3 className="font-semibold">{emp.name}</h3>
-                                <p className="text-sm text-gray-500">{emp.role}</p>
+                </div>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {people.map((p, i) => (
+                    <div key={i} className="bg-transparent rounded-3xl p-4 text-center border border-zinc-100 shadow-sm hover:shadow-md transition">
+                        <div className="relative w-28 h-28 mx-auto mb-4">
+                            <img src={p.img} className="rounded-full w-full h-full object-cover" />
+                            <div className="absolute bottom-0 right-[-2px]">
+                                <img src={BADGES} />
                             </div>
-                        ))}
-                    </div>
+                        </div>
 
+                        <h3 className="font-semibold text-gray-800">{p.name}</h3>
+                        <p className="text-sm text-[#947550] mb-3">{p.role}</p>
+
+                        <div className="flex items-center gap-2 justify-center">
+                            <span className="w-3 h-3 rounded-full bg-amber-400"></span>
+                            <span className="w-3 h-3 rounded-full bg-lime-500"></span>
+                            <span className="w-3 h-3 rounded-full bg-blue-500"></span>
+                            <span className="w-3 h-3 rounded-full bg-orange-400"></span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="flex flex-wrap items-center justify-start mt-4 text-sm text-gray-600 gap-8">
+                <div className="flex items-center gap-2">
+                    Rows per page:
+                    <select className="border rounded-lg px-2 py-1 bg-white">
+                        <option>100</option>
+                    </select>
+                </div>
+                <div>1–100 of 500</div>
+                <div className="flex gap-2">
+                    <button className="">{'<'}</button>
+                    <button className="">{'>'}</button>
                 </div>
             </div>
         </div>
-    )
+    );
 }
