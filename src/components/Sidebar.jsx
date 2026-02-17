@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
 import CHEVRON from "../assets/chevron.png";
+import LOGO from "../assets/companylogo.png";
+import MULTICHEVRON from "../assets/multichevron.png";
+import HOME from "../assets/home.png";
+import INFO from "../assets/myinfo.png";
+import PEOPLE from "../assets/people.png";
+import PROJECT from "../assets/project.png";
+import HIRING from "../assets/hiring.png";
+import REPORT from "../assets/report.png";
+import SETTINGS from "../assets/settings.png";
+
 
 export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
   const [openMenu, setOpenMenu] = useState(null);
   const [openChildMenu, setOpenChildMenu] = useState(null);
 
   const menus = [
-    { id: 1, title: "Home" },
-
+    { id: 1, title: "Home", icon: HOME, children: [] },
     {
       id: 2,
       title: "My Info",
+      icon: INFO,
       children: [
         {
           childId: 201,
@@ -21,16 +31,16 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
         }
       ]
     },
-
     {
       id: 3,
       title: "People",
+      icon: PEOPLE,
       children: []
     },
-
     {
       id: 4,
       title: "Team Management",
+      icon: HOME,
       children: [
         {
           childId: 401,
@@ -53,10 +63,10 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
         }
       ]
     },
-
     {
       id: 5,
       title: "Project Setup",
+      icon: PROJECT,
       children: [
         {
           childId: 501,
@@ -65,9 +75,8 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
         }
       ]
     },
-
-    { id: 6, title: "Hiring", children: [] },
-    { id: 7, title: "Report", children: [] }
+    { id: 6, title: "Hiring", icon: HIRING, children: [] },
+    { id: 7, title: "Report", icon: REPORT, children: [] }
   ];
 
   const handleClick = (item, parent) => {
@@ -86,84 +95,86 @@ export default function Sidebar({ isOpen, setIsOpen, active, setActive }) {
       {/* Mobile Overlay */}
       <div className={`fixed inset-0 bg-black/40 z-30 lg:hidden ${isOpen ? "block" : "hidden"}`} onClick={() => setIsOpen(false)} />
       <aside
-        className={`fixed lg:static z-40 top-0 left-0 w-64 h-full bg-zinc-800 text-white p-4
-        transform transition-transform duration-300
-        ${isOpen ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0`}
+        className={`fixed lg:static z-40 top-0 left-0 w-64 h-full bg-zinc-800 text-white p-4 flex flex-col transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       >
-        <h1 className="text-2xl font-bold mb-8">CORE</h1>
-
-        <nav className="space-y-2">
-          {menus.map((menu) => {
-            const isParentActive = active === menu.title;
-            const isParentIndicator = active === menu.title || active.startsWith(menu.title + "/");
-            return (
-              <div key={menu.id}>
-                {/* ================= PARENT ================= */}
-                <div onClick={() => {
-                  menu.children?.length > 0 ? setOpenMenu(openMenu === menu.title ? null : menu.title) : handleClick(menu.title);
-                }}
-                  className={`relative p-2 pl-4 rounded-lg cursor-pointer
+        <div>
+          <div className="flex items-center justify-between mb-10"><img src={LOGO} alt="Logo" /><img src={MULTICHEVRON} className="w-4 h-4 cursor-pointer" /></div>
+          <nav className="space-y-2">
+            {menus.map((menu) => {
+              const isParentActive = active === menu.title;
+              const isParentIndicator = active === menu.title || active.startsWith(menu.title + "/");
+              return (
+                <div key={menu.id}>
+                  {/* ================= PARENT ================= */}
+                  <div onClick={() => {
+                    menu.children?.length > 0 ? setOpenMenu(openMenu === menu.title ? null : menu.title) : handleClick(menu.title);
+                  }}
+                    className={`relative p-2 pl-4 rounded-lg cursor-pointer
                   ${isParentActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}
-                >
-                  {/* Active indicator */}
-                  <div className={`absolute left-[-18px] top-1/2 -translate-y-1/2 h-8 w-1.5 rounded-r-full
+                  >
+                    {/* Active indicator */}
+                    <div className={`absolute left-[-18px] top-1/2 -translate-y-1/2 h-8 w-1.5 rounded-r-full
                     ${isParentIndicator ? "bg-white opacity-100" : "opacity-0"}`} />
-                  {menu.title}
-                  {menu.children?.length > 0 && (
-                    <img src={CHEVRON} className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 transition ${openMenu === menu.title ? "rotate-90" : ""}`} />
-                  )}
-                </div>
+                    <img src={menu.icon} alt={menu.title} className={`w-5 h-5 mr-2 inline-block ${isParentActive ? "invert" : "opacity-100"}`} />
+                    {menu.title}
+                    {menu.children?.length > 0 && (
+                      <img src={CHEVRON} className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 transition ${openMenu === menu.title ? "rotate-90" : ""}`} />
+                    )}
+                  </div>
 
-                {/* ================= CHILDREN ================= */}
-                {menu.children?.length > 0 &&
-                  openMenu === menu.title && (
-                    <div className="ml-4 mt-1 space-y-1">
-                      {menu.children.map((child) => {
-                        const childPath = `${menu.title}/${child.childTitle}`;
-                        const isChildActive = active === childPath;
-                        return (
-                          <div key={child.childId}>
-                            {/* CHILD */}
-                            <div onClick={() => { child.grandchildren?.length > 0 ? setOpenChildMenu(openChildMenu === child.childTitle ? null : child.childTitle) : handleClick(child.childTitle, menu.title); }}
-                              className={`relative p-2 pl-4 rounded-lg cursor-pointer text-sm
+                  {/* ================= CHILDREN ================= */}
+                  {menu.children?.length > 0 &&
+                    openMenu === menu.title && (
+                      <div className="ml-4 mt-1 space-y-1">
+                        {menu.children.map((child) => {
+                          const childPath = `${menu.title}/${child.childTitle}`;
+                          const isChildActive = active === childPath;
+                          return (
+                            <div key={child.childId}>
+                              {/* CHILD */}
+                              <div onClick={() => { child.grandchildren?.length > 0 ? setOpenChildMenu(openChildMenu === child.childTitle ? null : child.childTitle) : handleClick(child.childTitle, menu.title); }}
+                                className={`relative p-2 pl-4 rounded-lg cursor-pointer text-sm
                               ${isChildActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}
-                            >
-                              {child.childTitle}
-                              {child.grandchildren?.length > 0 && (
-                                <img src={CHEVRON} className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 transition
+                              >
+                                {child.childTitle}
+                                {child.grandchildren?.length > 0 && (
+                                  <img src={CHEVRON} className={`absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 transition
                                   ${openChildMenu === child.childTitle ? "rotate-90" : ""}`} />
-                              )}
-                            </div>
+                                )}
+                              </div>
 
-                            {/* ================= GRANDCHILD ================= */}
-                            {child.grandchildren?.length > 0 &&
-                              openChildMenu === child.childTitle && (
-                                <div className="ml-4 mt-1 space-y-1">
-                                  {child.grandchildren.map((g) => {
-                                    const grandChildPath = `${menu.title}/${child.childTitle}/${g.grandchildTitle}`;
-                                    const isGrandChildActive = active === grandChildPath;
-                                    return (
-                                      <div key={g.grandchildId} onClick={() => handleClick(`${child.childTitle}/${g.grandchildTitle}`, menu.title)}
-                                        className={`p-2 pl-4 rounded-lg cursor-pointer text-sm
+                              {/* ================= GRANDCHILD ================= */}
+                              {child.grandchildren?.length > 0 &&
+                                openChildMenu === child.childTitle && (
+                                  <div className="ml-4 mt-1 space-y-1">
+                                    {child.grandchildren.map((g) => {
+                                      const grandChildPath = `${menu.title}/${child.childTitle}/${g.grandchildTitle}`;
+                                      const isGrandChildActive = active === grandChildPath;
+                                      return (
+                                        <div key={g.grandchildId} onClick={() => handleClick(`${child.childTitle}/${g.grandchildTitle}`, menu.title)}
+                                          className={`p-2 pl-4 rounded-lg cursor-pointer text-sm
                                           ${isGrandChildActive ? "bg-white text-black" : "hover:bg-zinc-700"}`}>
-                                        {g.grandchildTitle}
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-              </div>
-            );
-          })}
-        </nav>
+                                          {g.grandchildTitle}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                </div>
+              );
+            })}
+          </nav>
+        </div>
 
-        <div className="pt-4 text-sm opacity-70">Settings</div>
+        <div className="mt-auto text-sm opacity-70 border p-4 border-zinc-700 rounded-[15px] flex items-center cursor-pointer" onClick={() => alert("Settings clicked")}>
+          <img src={SETTINGS} alt="Settings" className={`w-5 h-5 mr-2 inline-block "opacity-100"}`} />
+          Settings
+        </div>
       </aside>
     </>
   );
