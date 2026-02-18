@@ -17,12 +17,12 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-[#F7F7F7]">
       <Sidebar
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <div className="flex-1 p-6 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto m-6 mx-0 bg-transparent">
         <Header />
 
         <Routes>

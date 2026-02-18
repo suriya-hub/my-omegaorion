@@ -2,14 +2,9 @@ import { useEffect, useState } from "react";
 import CHEVRON from "../assets/chevron.png";
 import LOGO from "../assets/companylogo.png";
 import MULTICHEVRON from "../assets/multichevron.png";
-import HOME from "../assets/home.png";
-import INFO from "../assets/myinfo.png";
-import PEOPLE from "../assets/people.png";
-import PROJECT from "../assets/project.png";
-import HIRING from "../assets/hiring.png";
-import REPORT from "../assets/report.png";
 import SETTINGS from "../assets/settings.png";
 import { useLocation, useNavigate } from "react-router-dom";
+import { menus } from "./Helper/DummyData";
 
 
 export default function Sidebar({ isOpen, setIsOpen, }) {
@@ -18,71 +13,6 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-
-  const menus = [
-    { id: 1, title: "Home", icon: HOME, route: "/home", children: [] },
-    {
-      id: 2,
-      title: "My Info",
-      icon: INFO,
-      route: "/myinfo",
-      children: [
-        {
-          childId: 201,
-          childTitle: "Employees Info",
-          grandchildren: [
-            { grandchildId: 2011, grandchildTitle: "Personal Details", route: "/myinfo/personaldetails" },
-          ]
-        }
-      ]
-    },
-    {
-      id: 3,
-      title: "People",
-      icon: PEOPLE,
-      route: "/people",
-      children: []
-    },
-    {
-      id: 4,
-      title: "Team Management",
-      icon: HOME,
-      route: "/teammanagement",
-      children: [
-        {
-          childId: 401,
-          childTitle: "Timesheet",
-          grandchildren: [
-            { grandchildId: 4011, grandchildTitle: "Add Employee", route: "/teammanagement/addemployee", },
-            { grandchildId: 4012, grandchildTitle: "Employee List", route: "/teammanagement/employeelist", }
-          ]
-        },
-        {
-          childId: 402,
-          childTitle: "Reimbursement",
-          grandchildren: [
-            { grandchildId: 4021, grandchildTitle: "Reimbursement List", route: "/reimbursement/reimbursementlist" }
-          ]
-        }
-      ]
-    },
-    {
-      id: 5,
-      title: "Project Setup",
-      icon: PROJECT,
-      route: "/projectsetup",
-      children: [
-        {
-          childId: 501,
-          childTitle: "Projects",
-          route: "/projectsetup/projects",
-          grandchildren: []
-        }
-      ]
-    },
-    { id: 6, title: "Hiring", icon: HIRING, route: "/hiring", children: [] },
-    { id: 7, title: "Report", icon: REPORT, route: "/report", children: [] }
-  ];
 
   useEffect(() => {
     const path = location.pathname;
@@ -111,7 +41,7 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
       {/* Mobile Overlay */}
       <div className={`fixed inset-0 bg-black/40 z-30 lg:hidden ${isOpen ? "block" : "hidden"}`} onClick={() => setIsOpen(false)} />
       <aside
-        className={`fixed lg:static z-40 top-0 left-0 w-64 h-full bg-zinc-800 text-white p-4 flex flex-col transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
+        className={`m-4 border rounded-[20px] fixed lg:static z-40 top-0 left-0 w-64 h-auto bg-[#3D3936] text-white p-4 flex flex-col transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-auto"} lg:translate-x-0 overflow-y-auto`}
       >
         <div>
           <div className="flex items-center justify-between mb-10"><img src={LOGO} alt="Logo" /><img src={MULTICHEVRON} className="w-4 h-4 cursor-pointer" /></div>
@@ -195,7 +125,7 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
           </nav>
         </div>
 
-        <div className="mt-auto text-sm opacity-70 border p-4 border-zinc-700 rounded-[15px] flex items-center cursor-pointer" onClick={() => alert("Settings clicked")}>
+        <div className="mt-auto text-sm opacity-70 border p-4 border-zinc-700 rounded-[15px] flex items-center cursor-pointer">
           <img src={SETTINGS} alt="Settings" className={`w-5 h-5 mr-2 inline-block "opacity-100"}`} />
           Settings
         </div>
