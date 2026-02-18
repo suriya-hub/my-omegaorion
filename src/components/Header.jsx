@@ -28,18 +28,18 @@ export default function Header() {
             </h2>
 
             <div className="flex items-center gap-4">
-                <span className="border border-zinc-200 px-3 py-2 rounded-full">
+                <span className="border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     MST
                 </span>
-                <span className="flex gap-2 items-center border border-zinc-200 px-3 py-2 rounded-full">
+                <span className="flex gap-2 items-center border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     <img src={CLOCK} className="inline" /> 02:03:02  <img src={NOTES} className="inline" />
                 </span>
-                <span className="border border-zinc-200 px-3 py-2 rounded-full">
+                <span className="border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     <img src={INBOX} className="inline" />
                 </span>
                 <img
                     src="https://i.pravatar.cc/40"
-                    className="w-10 h-10 rounded-full"
+                    className="w-10 h-10 rounded-full cursor-pointer"
                     alt="profile"
                 />
             </div>

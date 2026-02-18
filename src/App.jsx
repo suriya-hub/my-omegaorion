@@ -7,11 +7,11 @@ import People from "./components/People";
 import PersonalDetails from "./components/PersonalDetails";
 import Projects from "./components/Projects";
 import Hiring from "./components/Hiring";
-import Addemployee from "./components/Addemployee";
 import Reimbursement from "./components/Reimbursement";
 import Employeelist from "./components/Employeelist";
 import Report from "./components/Report";
 import Header from "./components/Header";
+import Timesheet from "./components/Timesheet";
 
 function App() {
   const [isOpen, setIsOpen] = useState(true);
@@ -22,7 +22,7 @@ function App() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <div className="flex-1 overflow-y-auto m-6 mx-0 bg-transparent">
+      <div className="flex-1 overflow-y-auto m-6 mx-0 mr-6 bg-transparent">
         <Header />
 
         <Routes>
@@ -30,7 +30,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/myinfo/personaldetails" element={<PersonalDetails />} />
           <Route path="/people" element={<People />} />
-          <Route path="/teammanagement/addemployee" element={<Addemployee />} />
+          <Route path="/teammanagement/timesheet" element={<Timesheet />} />
           <Route path="/teammanagement/employeelist" element={<Employeelist />} />
           <Route path="/teammanagement/reimbursementlist" element={<Reimbursement />} />
           <Route path="/projectsetup/projects" element={<Projects />} />
