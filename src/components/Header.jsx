@@ -5,7 +5,7 @@ import CLOCK from '../assets/time.png';
 import NOTES from '../assets/notes.png';
 import INBOX from '../assets/inbox.png';
 
-export default function Header() {
+export default function Header({ isOpen, setIsOpen }) {
 
     const getTitle = () => {
         const location = useLocation();
@@ -23,10 +23,12 @@ export default function Header() {
 
     return (
         <header className="h-16 bg-white shadow flex items-center justify-between px-6 rounded-[15px] ">
-            <h2 className="flex gap-2 text-xl font-semibold">
-                {getTitle()?.first} {getTitle()?.second !== '' && <img src={CHEVRON} alt='chev' className="w-auto  m-2" />} {getTitle()?.second}
-            </h2>
-
+            <div className="flex flex-row items-center gap-4">
+                {!isOpen && <button onClick={() => setIsOpen(true)} className={`mr-3 cursor-pointer`}>☰</button>}
+                <h2 className="hidden md:flex gap-2 text-xl font-semibold">
+                    {getTitle()?.first} {getTitle()?.second !== '' && <img src={CHEVRON} alt='chev' className="w-auto  m-2" />} {getTitle()?.second}
+                </h2>
+            </div>
             <div className="flex items-center gap-4">
                 <span className="border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     MST

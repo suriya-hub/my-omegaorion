@@ -17,14 +17,10 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="flex h-screen bg-[#F7F7F7]">
-      <Sidebar
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
-      <div className="flex-1 overflow-y-auto m-6 mx-0 mr-6 bg-transparent">
-        <Header />
-
+    <div className="flex h-screen bg-[#F7F7F7] overflow-hidden">
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div className="flex-1 overflow-y-auto lg:m-6 mx-0 mr-0 lg:mr-6">
+        <Header isOpen={isOpen} setIsOpen={setIsOpen} />
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Home />} />
