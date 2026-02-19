@@ -4,8 +4,25 @@ import CLOCK from '../assets/time.png';
 import NOTES from '../assets/notes.png';
 import INBOX from '../assets/inbox.png';
 import { capitalizeFirstWord } from '../Helper/Utils';
+import { useEffect, useState } from 'react';
 
 export default function Header({ isOpen, setIsOpen }) {
+    const [time, setTime] = useState("");
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+                timeZone: "Asia/Kolkata"
+            });
+            setTime(formattedTime);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     const getTitle = () => {
         const location = useLocation();
@@ -34,7 +51,7 @@ export default function Header({ isOpen, setIsOpen }) {
                     MST
                 </span>
                 <span className="flex gap-2 items-center border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
-                    <img src={CLOCK} className="inline" /> 02:03:02  <img src={NOTES} className="inline" />
+                    <img src={CLOCK} className="inline" /> {time}  <img src={NOTES} className="inline" />
                 </span>
                 <span className="border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     <img src={INBOX} className="inline" />
