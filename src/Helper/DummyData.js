@@ -73,7 +73,7 @@ export const menus = [
                 childId: 402,
                 childTitle: "Reimbursement",
                 grandchildren: [
-                    { grandchildId: 4021, grandchildTitle: "Reimbursement List", route: "/reimbursement/reimbursementlist" }
+                    { grandchildId: 4021, grandchildTitle: "Reimbursement List", route: "/teammanagement/reimbursementlist" }
                 ]
             }
         ]

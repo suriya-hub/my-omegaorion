@@ -78,7 +78,7 @@ export default function People() {
             <div className="flex flex-wrap items-center justify-start mt-4 text-sm text-gray-600 gap-8">
                 <div className="flex items-center gap-2">
                     <span className="font-bold"> Rows per page:</span>
-                    <select className="border rounded-lg px-2 py-1 bg-white">
+                    <select className="border border-zinc-200 rounded-lg px-2 py-1 bg-white">
                         <option>25</option>
                         <option>50</option>
                         <option>100</option>

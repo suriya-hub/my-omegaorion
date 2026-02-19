@@ -130,7 +130,7 @@ export default function Timesheet() {
             <div className="flex flex-wrap items-center gap-6 mt-4 text-sm">
                 <div className="flex items-center gap-2">
                     <span className="font-semibold">Rows per page:</span>
-                    <select className="border rounded-lg px-2 py-1">
+                    <select className="border border-zinc-200 rounded-lg px-2 py-1">
                         <option>25</option>
                         <option>50</option>
                         <option>100</option>
