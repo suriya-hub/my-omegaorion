@@ -13,7 +13,15 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
   const [openChildMenu, setOpenChildMenu] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const path = location.pathname;
@@ -33,8 +41,9 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
 
   const handleNavigate = (route) => {
     navigate(route);
+    if (isMobile) setIsOpen(false);
   };
-  console.log(isOpen, 'isOpen')
+
   return (
     <>
 
