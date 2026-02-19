@@ -47,7 +47,7 @@ export default function Header({ isOpen, setIsOpen }) {
                 </h2>
             </div>
             <div className="flex items-center gap-4">
-                <span className="border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
+                <span className="hidden md:flex border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     MST
                 </span>
                 <span className="flex gap-2 items-center border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
