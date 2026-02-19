@@ -24,6 +24,10 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
   }, []);
 
   useEffect(() => {
+    if (window.innerWidth < 1024) setIsOpen(false);
+  }, [isMobile])
+
+  useEffect(() => {
     const path = location.pathname;
     menus.forEach((menu) => {
       if (path.startsWith(menu.route)) {
