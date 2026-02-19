@@ -13,9 +13,6 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
 
   useEffect(() => {
     const path = location.pathname;
@@ -35,9 +32,8 @@ export default function Sidebar({ isOpen, setIsOpen, }) {
 
   const handleNavigate = (route) => {
     navigate(route);
-    setIsOpen(false);
   };
-
+  console.log(isOpen, 'isOpen')
   return (
     <>
 
