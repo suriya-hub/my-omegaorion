@@ -4,7 +4,8 @@ import LOGO from "../assets/companylogo.png";
 import MULTICHEVRON from "../assets/multichevron.png";
 import SETTINGS from "../assets/settings.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import { menus } from "./Helper/DummyData";
+import { menus } from "../Helper/DummyData";
+
 
 
 export default function Sidebar({ isOpen, setIsOpen, }) {

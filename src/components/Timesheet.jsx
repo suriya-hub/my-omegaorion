@@ -1,21 +1,11 @@
 import { useState } from "react";
-import {
-    people,
-    tableData,
-    timesheetData,
-} from "./Helper/DummyData";
-
 import SEARCH from "../assets/search.png";
-import BADGES from "../assets/badges.png";
 import DOWNLOAD from "../assets/Stroke1.png";
 import FILTER from "../assets/Stroke2.png";
-import PLUS from "../assets/Stroke3.png";
-import GIT from "../assets/Stroke4.png";
-import BOX from "../assets/element-3.png";
-import BOXTWO from "../assets/plus.png";
 import SORTNAME from "../assets/StrokeIcons5.png";
 import SORT from "../assets/StrokeIcons7.png";
 import DATE from "../assets/StrokeIcons8.png";
+import { tableData, timesheetData } from "../Helper/DummyData";
 
 export default function Timesheet() {
     const [sortKey, setSortKey] = useState("");

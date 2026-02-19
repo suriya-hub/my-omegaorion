@@ -7,7 +7,7 @@ import PLUS from "../assets/Stroke3.png";
 import GIT from "../assets/Stroke4.png";
 import BOX from "../assets/element-3.png";
 import BOXTWO from "../assets/plus.png";
-import { people } from "./Helper/DummyData";
+import { people } from "../Helper/DummyData";
 
 
 export default function People() {
@@ -48,7 +48,7 @@ export default function People() {
                         <div className="relative w-25 h-25 mx-auto mb-4">
                             <img src={p.img} className="rounded-full w-full h-full object-cover" />
                             <div className="absolute bottom-0 right-[-2px]">
-                                <img src={BADGES} />
+                                <img src={p.badge} alt={p.name} />
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@ export default function People() {
             </div>
             <div className="flex flex-wrap items-center justify-start mt-4 text-sm text-gray-600 gap-8">
                 <div className="flex items-center gap-2">
-                   <span className="font-bold"> Rows per page:</span>
+                    <span className="font-bold"> Rows per page:</span>
                     <select className="border rounded-lg px-2 py-1 bg-white">
                         <option>25</option>
                         <option>50</option>

@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router-dom';
-import { capitalizeFirstWord } from './Helper/Utils';
 import CHEVRON from '../assets/stroke.png';
 import CLOCK from '../assets/time.png';
 import NOTES from '../assets/notes.png';
 import INBOX from '../assets/inbox.png';
+import { capitalizeFirstWord } from '../Helper/Utils';
 
 export default function Header({ isOpen, setIsOpen }) {
 
