@@ -5,7 +5,7 @@ import FILTER from "../assets/Stroke2.png";
 import PLUS from "../assets/Stroke3.png";
 import GIT from "../assets/Stroke4.png";
 import BOX from "../assets/element-3.png";
-import BOXTWO from "../assets/plus.png";
+import BOXTWO from "../assets/Plus.png";
 import { people } from "../Helper/DummyData";
 import { useState } from "react";
 
