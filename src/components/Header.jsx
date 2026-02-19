@@ -3,11 +3,21 @@ import CHEVRON from '../assets/stroke.png';
 import CLOCK from '../assets/time.png';
 import NOTES from '../assets/notes.png';
 import INBOX from '../assets/inbox.png';
+import LOGO from '../assets/companylogo.png';
 import { capitalizeFirstWord } from '../Helper/Utils';
 import { useEffect, useState } from 'react';
 
 export default function Header({ isOpen, setIsOpen }) {
     const [time, setTime] = useState("");
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 1024);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -46,11 +56,12 @@ export default function Header({ isOpen, setIsOpen }) {
                     {getTitle()?.first} {getTitle()?.second !== '' && <img src={CHEVRON} alt='chev' className="w-auto  m-2" />} {getTitle()?.second}
                 </h2>
             </div>
+            {isMobile && <img src={LOGO} className="bg-[#3D3936]" />}
             <div className="flex items-center gap-4">
                 <span className="hidden md:flex border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     MST
                 </span>
-                <span className="flex gap-2 items-center border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
+                <span className="hidden md:flex flex gap-2 items-center border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
                     <img src={CLOCK} className="inline" /> {time}  <img src={NOTES} className="inline" />
                 </span>
                 <span className="border border-zinc-200 px-3 py-2 rounded-full cursor-pointer">
