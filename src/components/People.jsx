@@ -1,6 +1,5 @@
 
 import SEARCH from "../assets/search.png";
-import BADGES from "../assets/badges.png";
 import DOWNLOAD from "../assets/Stroke1.png";
 import FILTER from "../assets/Stroke2.png";
 import PLUS from "../assets/Stroke3.png";
