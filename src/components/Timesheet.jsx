@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import SEARCH from "../assets/search.png";
 import DOWNLOAD from "../assets/Stroke1.png";
 import FILTER from "../assets/Stroke2.png";
@@ -10,6 +10,7 @@ import { tableData, timesheetData } from "../Helper/DummyData";
 export default function Timesheet() {
     const [sortKey, setSortKey] = useState("");
     const [direction, setDirection] = useState("asc");
+    const [search, setSearch] = useState("");
 
     const handleSort = (key) => {
         if (sortKey === key) {
@@ -48,6 +49,14 @@ export default function Timesheet() {
         return direction === "asc" ? aVal - bVal : bVal - aVal;
     });
 
+    const filteredData = useMemo(() => {
+        return sortedData.filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase()) ||
+            item.id.toString().includes(search)
+        );
+    }, [search, sortedData]);
+
+
 
     const SortIcon = ({ column }) => (
         <img src={["total", "regular"].includes(column) ? SORT : SORTNAME} className={`ml-1 transition-transform duration-200
@@ -61,7 +70,7 @@ export default function Timesheet() {
                     <img src={SEARCH} />
                     <input
                         placeholder="Search by Employee Name or Number"
-                        className="outline-none w-full text-sm"
+                        className="outline-none w-full text-sm" onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
                 <div className="flex items-center gap-2">
@@ -87,45 +96,47 @@ export default function Timesheet() {
                 })}
             </div>
 
-            <div className="rounded-2xl overflow-hidden mt-4 border border-gray-200">
-                <table className="w-full text-sm">
-                    <thead className="border border-gray-200">
-                        <tr>
-                            <th onClick={() => handleSort("name")} className="text-left px-6 py-4 cursor-pointer" >
-                                <div className="flex items-center gap-1">
-                                    Employee
-                                    <img src={SORTNAME} className={`ml-1 transition-transform duration-200 ${sortKey === "name" && direction === "desc" ? "rotate-180" : ""}`} />
-                                </div>
-                            </th>
-
-                            {["total", "regular", "overtime", "ot2", "holiday"].map((col) => (
-                                <th key={col} onClick={() => handleSort(col)} className={`px-6 py-4 cursor-pointer ${sortKey === col && "text-gray-900"
-                                    }`}>
-                                    <div className="flex items-center justify-center gap-1 capitalize">
-                                        {col}
-                                        <SortIcon column={col} />
+            {filteredData.length === 0 ?
+                <p className="text-center text-gray-400 mt-6">No employee found</p>
+                : <div className="rounded-2xl overflow-hidden mt-4 border border-gray-200">
+                    <table className="w-full text-sm">
+                        <thead className="border border-gray-200">
+                            <tr>
+                                <th onClick={() => handleSort("name")} className="text-left px-6 py-4 cursor-pointer" >
+                                    <div className="flex items-center gap-1">
+                                        Employee
+                                        <img src={SORTNAME} className={`ml-1 transition-transform duration-200 ${sortKey === "name" && direction === "desc" ? "rotate-180" : ""}`} />
                                     </div>
                                 </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                        {sortedData.map((data) => (
-                            <tr key={data.id} className="hover:bg-gray-50">
-                                <td className="px-6 py-4 flex items-center gap-3">
-                                    <img src={data.icons} className="w-8 h-8 rounded-full" />
-                                    <span className="font-medium text-gray-800">{data.name}</span>
-                                </td>
-                                <td className="px-6 py-4 text-center">{data.total}</td>
-                                <td className="px-6 py-4 text-center">{data.regular}</td>
-                                <td className="px-6 py-4 text-center">{data.overtime}</td>
-                                <td className="px-6 py-4 text-center">{data.ot2}</td>
-                                <td className="px-6 py-4 text-center">{data.holiday}</td>
+
+                                {["total", "regular", "overtime", "ot2", "holiday"].map((col) => (
+                                    <th key={col} onClick={() => handleSort(col)} className={`px-6 py-4 cursor-pointer ${sortKey === col && "text-gray-900"
+                                        }`}>
+                                        <div className="flex items-center justify-center gap-1 capitalize">
+                                            {col}
+                                            <SortIcon column={col} />
+                                        </div>
+                                    </th>
+                                ))}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {filteredData.map((data) => (
+                                <tr key={data.id} className="hover:bg-gray-50">
+                                    <td className="px-6 py-4 flex items-center gap-3">
+                                        <img src={data.icons} className="w-8 h-8 rounded-full" />
+                                        <span className="font-medium text-gray-800">{data.name}</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-center">{data.total}</td>
+                                    <td className="px-6 py-4 text-center">{data.regular}</td>
+                                    <td className="px-6 py-4 text-center">{data.overtime}</td>
+                                    <td className="px-6 py-4 text-center">{data.ot2}</td>
+                                    <td className="px-6 py-4 text-center">{data.holiday}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>}
 
             <div className="flex flex-wrap items-center gap-6 mt-4 text-sm">
                 <div className="flex items-center gap-2">
