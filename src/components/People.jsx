@@ -8,16 +8,24 @@ import GIT from "../assets/Stroke4.png";
 import BOX from "../assets/element-3.png";
 import BOXTWO from "../assets/plus.png";
 import { people } from "../Helper/DummyData";
+import { useState } from "react";
 
 
 export default function People() {
+    const [search, setSearch] = useState("");
+
+    const filteredPeople = people.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+
     return (
         <div className="p-3 m-4 mx-0 bg-white rounded-[20px] border border-zinc-200">
             <div className="flex flex-wrap gap-3 items-center justify-between mb-6">
                 <div className="flex gap-3 items-center bg-white rounded-full px-4 py-4 w-full max-w-md shadow-sm">
                     <img src={SEARCH} alt="search" />
                     <input placeholder="Search by Employee Name or Number"
-                        className="bg-white outline-none w-full text-sm" />
+                        className="bg-white outline-none w-full text-sm" onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className="flex items-center gap-2 cursor-pointer">
                     <span className="border border-zinc-200 px-3 py-2 rounded-[15px]">
@@ -43,7 +51,7 @@ export default function People() {
                 </div>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {people.map((p, i) => (
+                {filteredPeople.map((p, i) => (
                     <div key={i} className="bg-white rounded-3xl p-4 text-center border border-zinc-100 shadow-sm hover:shadow-md transition cursor-pointer">
                         <div className="relative w-25 h-25 mx-auto mb-4">
                             <img src={p.img} className="rounded-full w-full h-full object-cover" />
@@ -64,6 +72,9 @@ export default function People() {
                     </div>
                 ))}
             </div>
+            {filteredPeople.length === 0 && (
+                <p className="text-center text-gray-400 mt-6">No employee found</p>
+            )}
             <div className="flex flex-wrap items-center justify-start mt-4 text-sm text-gray-600 gap-8">
                 <div className="flex items-center gap-2">
                     <span className="font-bold"> Rows per page:</span>
